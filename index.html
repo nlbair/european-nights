@@ -239,7 +239,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <div class="app-wrap">
   <div class="app-header">
     <div class="header-left">
-      <img src="ucl.jpeg" class="ucl-logo" alt="UCL" onerror="this.style.display='none'">
+      <img src="ucl.png" class="ucl-logo" alt="UCL" onerror="this.style.display='none'">
       <div>
         <div class="app-title">EUROPEAN NIGHTS</div>
         <div class="app-sub">Draft your squad. Win the Champions League.</div>
@@ -858,7 +858,7 @@ function closeModal(){document.getElementById('htp-modal').classList.remove('ope
 async function init(){
   render();
   try{
-    const res=await fetch('players.json');
+    const res = await fetch('players.json').catch(() => fetch('europeannights/players.json'));
     PLAYERS=await res.json();
     const seen=new Set();
     validCombos=[];
