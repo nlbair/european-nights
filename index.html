@@ -151,6 +151,34 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .stats-table tr.team-avg td{font-weight:700;border-top:1.5px solid var(--blue-dim);}
 .td-rating{color:var(--blue);font-weight:700;}
 .stats-note{font-size:0.65rem;color:var(--silver-dim);margin-top:6px;}
+
+/* LEADERBOARD */
+.lb-submit-wrap{background:var(--mid);border:1px solid var(--blue-dim);border-radius:12px;padding:20px;margin-top:16px;}
+.lb-submit-title{font-family:var(--font-display);font-size:1.3rem;letter-spacing:3px;margin-bottom:12px;}
+.lb-input-row{display:flex;gap:8px;}
+.lb-name-input{flex:1;padding:10px 14px;border-radius:8px;border:1px solid var(--silver-dim);font-family:var(--font-body);font-size:0.88rem;outline:none;background:var(--deep);color:var(--white);transition:border-color 0.15s;}
+.lb-name-input:focus{border-color:var(--blue);}
+.lb-name-input::placeholder{color:var(--silver-dim);}
+.lb-submit-btn{background:var(--blue);color:var(--white);border:none;border-radius:8px;padding:10px 20px;font-family:var(--font-display);font-size:1rem;letter-spacing:2px;cursor:pointer;transition:opacity 0.15s;white-space:nowrap;}
+.lb-submit-btn:hover{opacity:0.85;}
+.lb-submit-btn:disabled{opacity:0.35;cursor:not-allowed;}
+.lb-error{font-size:0.78rem;color:#EF4444;margin-top:6px;}
+.lb-rank-reveal{background:var(--dark);border:1px solid var(--blue);border-radius:10px;padding:16px;margin-top:12px;text-align:center;}
+.lb-rank-num{font-family:var(--font-display);font-size:2.8rem;letter-spacing:2px;color:var(--blue);}
+.lb-rank-label{font-size:0.72rem;color:var(--silver);letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
+.lb-percentile{font-size:0.85rem;color:var(--silver);margin-top:6px;}
+.lb-table-wrap{background:var(--mid);border:1px solid var(--blue-dim);border-radius:12px;overflow:hidden;margin-top:16px;max-height:400px;overflow-y:auto;}
+.lb-table-wrap::-webkit-scrollbar{width:4px;}
+.lb-table-wrap::-webkit-scrollbar-thumb{background:var(--blue-dim);border-radius:2px;}
+.lb-table{width:100%;border-collapse:collapse;font-size:0.82rem;}
+.lb-table th{background:var(--mid);padding:8px 12px;text-align:left;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--silver);border-bottom:1px solid var(--blue-dim);position:sticky;top:0;z-index:1;}
+.lb-table th:not(:first-child){text-align:right;}
+.lb-table td{padding:8px 12px;border-top:1px solid #ffffff08;color:var(--white);}
+.lb-table td:not(:first-child){text-align:right;}
+.lb-table tr.my-row td{background:#0232FF18;color:var(--white);font-weight:700;}
+.lb-rank-cell{color:var(--silver);font-size:0.75rem;width:32px;}
+.lb-result-pill{font-size:0.65rem;padding:2px 8px;border-radius:10px;background:var(--blue-dim);color:var(--blue);}
+
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;align-items:center;justify-content:center;}
 .modal-overlay.open{display:flex;}
 .modal-box{background:var(--mid);border-radius:18px;padding:36px;max-width:540px;width:90%;position:relative;max-height:85vh;overflow-y:auto;border:1px solid var(--blue-dim);}
@@ -286,6 +314,42 @@ function getResult(ovrRaw) {
   return 'Champion';
 }
 
+// ── LEADERBOARD ─────────────────────────────────────────────────────────────
+const API_URL = 'https://script.google.com/macros/s/AKfycby36HrRWGy3aMnOyoMY45msl5qnIU-3De1X8_JrqaqwBaxY3hvkId7xuWdvRyJfaY_Y/exec';
+const BAD_WORDS = ['fuck','shit','cunt','bitch','dick','cock','pussy','nigger','nigga','fag','faggot','whore','slut','twat','wank','bollocks','arse'];
+function containsBadWord(s){const l=s.toLowerCase().replace(/[^a-z0-9]/g,"");return BAD_WORDS.some(w=>l.includes(w));}
+const lbState={submitted:false,myRank:null,myPercentile:null,leaderboard:[],loading:false,error:null,myName:null};
+async function submitToLeaderboard(){
+  const input=document.getElementById("lb-name-input");
+  const name=input?.value?.trim();
+  if(!name){showLbError("Please enter a name");return;}
+  if(name.length>50){showLbError("Max 50 characters");return;}
+  if(containsBadWord(name)){showLbError("Please choose a different name");return;}
+  const btn=document.getElementById("lb-submit-btn");
+  if(btn){btn.disabled=true;btn.textContent="SUBMITTING...";}
+  lbState.loading=true;lbState.error=null;
+  try{
+    await fetch(API_URL,{method:"POST",body:JSON.stringify({name,ovr:S.ratings.ovr,result:S.result,def:S.ratings.def,mid:S.ratings.mid,atk:S.ratings.atk})});
+    const res=await fetch(API_URL);
+    const data=await res.json();
+    lbState.leaderboard=data;
+    const myIdx=data.findIndex(r=>r.name===name&&r.ovr===S.ratings.ovr);
+    lbState.myRank=myIdx>=0?myIdx+1:data.filter(r=>r.ovr>S.ratings.ovr).length+1;
+    const total=data.length;
+    lbState.myPercentile=total>1?Math.round((1-(lbState.myRank-1)/total)*100):100;
+    lbState.submitted=true;lbState.loading=false;lbState.myName=name;
+    renderLbSection();
+  }catch(e){lbState.loading=false;lbState.error="Failed. Try again.";if(btn){btn.disabled=false;btn.textContent="SUBMIT";}renderLbSection();}
+}
+function showLbError(msg){const el=document.getElementById("lb-error");if(el)el.textContent=msg;}
+function renderLbSection(){const wrap=document.getElementById("lb-section");if(wrap)wrap.innerHTML=buildLbSection();}
+function buildLbSection(){
+  if(!lbState.submitted){return `<div class="lb-submit-wrap"><div class="lb-submit-title">ADD TO LEADERBOARD</div><div class="lb-input-row"><input class="lb-name-input" id="lb-name-input" type="text" maxlength="50" placeholder="Your name (max 50 chars)"><button class="lb-submit-btn" id="lb-submit-btn" onclick="submitToLeaderboard()">SUBMIT</button></div><div class="lb-error" id="lb-error"></div></div>`;}
+  const pct=lbState.myPercentile;
+  const pctLabel=pct>=99?"Top 1%":pct>=95?"Top 5%":pct>=90?"Top 10%":pct>=75?"Top 25%":pct>=50?"Top 50%":`Bottom ${100-pct}%`;
+  const rows=lbState.leaderboard.slice(0,100).map((r,i)=>{const isMe=r.name===lbState.myName&&r.ovr===S.ratings.ovr;return `<tr class="${isMe?"my-row":""}"><td class="lb-rank-cell">#${i+1}</td><td>${r.name}</td><td class="td-rating">${r.ovr}</td><td><span class="lb-result-pill">${r.result}</span></td><td>${r.def}</td><td>${r.mid}</td><td>${r.atk}</td></tr>`;}).join("");
+  return `<div class="lb-rank-reveal"><div class="lb-rank-num">#${lbState.myRank}</div><div class="lb-rank-label">Your Global Rank</div><div class="lb-percentile">${pctLabel} of all squads · OVR ${S.ratings.ovr}</div></div><div class="lb-table-wrap" style="margin-top:12px;"><table class="lb-table"><thead><tr><th>#</th><th>Name</th><th>OVR</th><th>Result</th><th>DEF</th><th>MID</th><th>ATK</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
 // ── LOGO HELPERS ──────────────────────────────────────────────────────────────
 function logoPath(teamId) { return teamId ? `logos/${parseInt(teamId)}.png` : null; }
 
@@ -627,6 +691,7 @@ function buildResults(){
           <button class="share-btn sb-reddit" onclick="si('reddit','${txt}','${url}')">Reddit</button>
         </div>
         <input class="share-url-input" type="text" value="${url}" readonly>
+        <div id="lb-section">${buildLbSection()}</div>
         <button class="btn-play-again" onclick="playAgain()">PLAY AGAIN</button>
       </div>
       <div class="col-right">
@@ -728,6 +793,7 @@ function playAgain(){
   S.phase='rolling'; S.combo=null; S.pool=[]; S.posFilter='ALL';
   S.roster={}; S.pendingPlayer=null; S.pickNum=0;
   S.result=null; S.ratings=null;
+  lbState.submitted=false; lbState.myRank=null; lbState.myPercentile=null; lbState.leaderboard=[]; lbState.myName=null;
   render();
 }
 
