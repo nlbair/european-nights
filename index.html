@@ -9,20 +9,10 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --dark:#010056;
-  --mid:#000830;
-  --deep:#000520;
-  --blue:#0232FF;
-  --blue-dim:#0232FF44;
-  --white:#FFFFFF;
-  --silver:#B2BEBE;
-  --silver-dim:#B2BEBE44;
-  --gk:#F59E0B;
-  --def:#0232FF;
-  --mid-col:#10B981;
-  --fwd:#EF4444;
-  --font-display:'Bebas Neue',sans-serif;
-  --font-body:'DM Sans',sans-serif;
+  --dark:#010056;--mid:#000830;--deep:#000520;
+  --blue:#0232FF;--blue-dim:#0232FF44;
+  --white:#FFFFFF;--silver:#B2BEBE;--silver-dim:#B2BEBE44;
+  --font-display:'Bebas Neue',sans-serif;--font-body:'DM Sans',sans-serif;
 }
 html{scroll-behavior:smooth;}
 body{font-family:var(--font-body);background:var(--dark);color:var(--white);min-height:100vh;overflow-x:hidden;}
@@ -43,6 +33,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .col-left{flex:1;min-width:0;}
 .col-right{width:420px;flex-shrink:0;}
 
+/* PROGRESS */
+.progress-bar{display:flex;gap:6px;margin-bottom:20px;align-items:center;}
+.progress-pip{width:24px;height:6px;border-radius:3px;background:var(--silver-dim);transition:background 0.3s;}
+.progress-pip.done{background:var(--blue);}
+.progress-pip.current{background:var(--blue);opacity:0.5;}
+.progress-label{font-size:0.72rem;color:var(--silver);letter-spacing:2px;text-transform:uppercase;margin-left:8px;}
+
 /* SLOT MACHINE */
 .slot-wrap{border:2px solid var(--blue-dim);border-radius:16px;padding:40px 24px;text-align:center;margin-bottom:20px;background:var(--mid);min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:border-color 0.3s;position:relative;overflow:hidden;}
 .slot-wrap::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,#0232FF11 0%,transparent 70%);pointer-events:none;}
@@ -59,11 +56,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .btn-spin:hover{opacity:0.85;}
 .btn-spin:active{transform:scale(0.98);}
 .btn-spin:disabled{opacity:0.35;cursor:not-allowed;}
-.btn-skip{background:none;border:1px solid var(--silver-dim);border-radius:12px;padding:10px 20px;font-size:0.82rem;font-weight:600;font-family:var(--font-body);cursor:pointer;color:var(--silver);transition:all 0.15s;margin-top:10px;width:100%;}
-.btn-skip:hover{border-color:var(--silver);color:var(--white);}
-.skip-count{font-size:0.72rem;color:var(--silver-dim);text-align:center;margin-top:6px;letter-spacing:2px;text-transform:uppercase;}
-.btn-skip-inline{background:none;border:1px solid var(--silver-dim);border-radius:8px;padding:6px 14px;font-size:0.75rem;font-weight:600;font-family:var(--font-body);cursor:pointer;color:var(--silver);transition:all 0.15s;white-space:nowrap;flex-shrink:0;}
-.btn-skip-inline:hover{border-color:var(--silver);color:var(--white);}
 .btn-primary{background:var(--blue);color:var(--white);border:none;border-radius:12px;padding:14px 40px;font-family:var(--font-display);font-size:1.4rem;letter-spacing:3px;cursor:pointer;transition:opacity 0.15s;width:100%;margin-top:20px;}
 .btn-primary:hover{opacity:0.85;}
 .btn-back{background:none;border:1px solid var(--silver-dim);border-radius:8px;padding:9px 18px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:var(--font-body);color:var(--silver);width:100%;margin-top:12px;transition:all 0.15s;}
@@ -71,18 +63,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .btn-play-again{width:100%;padding:16px;border-radius:12px;border:none;background:var(--blue);color:var(--white);font-family:var(--font-display);font-size:1.4rem;letter-spacing:3px;cursor:pointer;transition:opacity 0.15s;margin-top:16px;}
 .btn-play-again:hover{opacity:0.85;}
 
-/* SLOT PILLS */
-.slot-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
-.pill{background:var(--mid);border:1px solid var(--silver-dim);border-radius:20px;padding:4px 14px;font-size:11px;letter-spacing:1px;color:var(--silver);font-weight:600;transition:all 0.2s;}
-.pill.filled{border-color:var(--blue);color:var(--white);}
-
 /* DRAFT HEADER */
 .draft-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding:16px;background:var(--mid);border-radius:12px;border:1px solid var(--blue-dim);}
-.draft-club-logo-circle{width:56px;height:56px;border-radius:50%;border:2px solid var(--blue-dim);background:var(--deep);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;}
-.draft-club-logo-img{width:100%;height:100%;object-fit:contain;padding:6px;}
-.draft-club-logo-abbr{font-family:var(--font-display);font-size:1rem;letter-spacing:1px;color:var(--blue);}
+.draft-logo-circle{width:56px;height:56px;border-radius:50%;border:2px solid var(--blue-dim);background:var(--deep);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;}
+.draft-logo-img{width:100%;height:100%;object-fit:contain;padding:6px;}
+.draft-logo-abbr{font-family:var(--font-display);font-size:1rem;letter-spacing:1px;color:var(--blue);}
 .draft-club-name{font-family:var(--font-display);font-size:1.8rem;letter-spacing:2px;}
 .draft-season{font-size:0.9rem;color:var(--blue);font-weight:700;letter-spacing:4px;margin-top:2px;}
+.draft-pick-label{font-size:0.72rem;color:var(--silver);letter-spacing:2px;text-transform:uppercase;margin-top:4px;}
 
 /* POS FILTERS */
 .pos-filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
@@ -98,7 +86,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* PLAYER TABLE */
 .table-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
 .table-label{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--silver);}
-.player-table-wrap{max-height:480px;overflow-y:auto;background:var(--mid);border-radius:12px;border:1px solid var(--blue-dim);}
+.player-table-wrap{max-height:460px;overflow-y:auto;background:var(--mid);border-radius:12px;border:1px solid var(--blue-dim);}
 .player-table-wrap::-webkit-scrollbar{width:4px;}
 .player-table-wrap::-webkit-scrollbar-thumb{background:var(--blue-dim);border-radius:2px;}
 .player-table{width:100%;border-collapse:collapse;}
@@ -109,14 +97,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .player-row{cursor:pointer;transition:background 0.1s;}
 .player-row:hover{background:#0232FF11;}
 .player-row.hidden{display:none;}
-
-/* POSITION BADGE */
 .pos-badge{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:800;flex-shrink:0;font-family:var(--font-body);letter-spacing:0.5px;}
 .pos-badge.GK{background:#F59E0B22;color:#F59E0B;border:1.5px solid #F59E0B55;}
 .pos-badge.DEF{background:#0232FF22;color:#60A5FA;border:1.5px solid #0232FF55;}
 .pos-badge.MID{background:#10B98122;color:#10B981;border:1.5px solid #10B98155;}
 .pos-badge.FWD{background:#EF444422;color:#EF4444;border:1.5px solid #EF444455;}
-
 .player-img-cell{display:flex;align-items:center;gap:10px;}
 .player-name-cell{font-size:0.88rem;font-weight:600;}
 .stat-rating{font-weight:700;color:var(--blue);font-size:0.9rem;}
@@ -142,16 +127,17 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .section-label{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--silver);margin-bottom:10px;}
 .roster-list{margin-bottom:16px;}
 .roster-row{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;margin-bottom:4px;border:1px solid #ffffff0a;}
-.slot-num{width:22px;height:22px;border-radius:50%;background:var(--blue);color:var(--white);font-size:0.62rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.roster-club-logo{width:24px;height:24px;object-fit:contain;flex-shrink:0;}
+.roster-club-abbr{width:24px;height:24px;border-radius:4px;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:0.5rem;font-weight:800;color:var(--blue);flex-shrink:0;}
 .roster-info{flex:1;min-width:0;}
 .roster-name{font-size:0.82rem;font-weight:600;}
 .roster-stat{font-size:0.7rem;color:var(--silver);}
 
-/* LINEUP SLOTS */
-.lineup-slots{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
-.lineup-slot-btn{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--silver-dim);background:var(--mid);font-size:0.9rem;font-weight:800;cursor:pointer;font-family:var(--font-body);transition:all 0.15s;color:var(--white);}
-.lineup-slot-btn:hover{border-color:var(--blue);background:var(--blue);}
-.lineup-slot-btn:disabled{opacity:0.2;cursor:not-allowed;}
+/* PLACING */
+.placing-info{background:var(--mid);border:1px solid var(--blue-dim);border-radius:12px;padding:20px;margin-bottom:16px;}
+.placing-name{font-family:var(--font-display);font-size:1.8rem;letter-spacing:2px;}
+.placing-meta{font-size:0.82rem;color:var(--silver);margin-top:4px;}
+.placing-instruction{font-size:0.72rem;color:var(--blue);letter-spacing:2px;text-transform:uppercase;margin-top:12px;}
 
 /* RESULT */
 .result-banner{border-radius:16px;background:var(--mid);padding:40px;text-align:center;margin-bottom:24px;border:2px solid var(--blue-dim);position:relative;overflow:hidden;}
@@ -167,27 +153,17 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 /* SHARE CARD */
 .share-card{border-radius:16px;background:var(--mid);padding:24px;margin-bottom:16px;border:1px solid var(--blue-dim);}
-.share-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
-.share-club-logo-circle{width:44px;height:44px;border-radius:50%;border:2px solid var(--blue-dim);background:var(--deep);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;}
-.share-club-logo-img{width:100%;height:100%;object-fit:contain;padding:5px;}
-.share-club-logo-abbr{font-family:var(--font-display);font-size:0.9rem;letter-spacing:1px;color:var(--blue);}
-.share-club-name{font-family:var(--font-display);font-size:1.3rem;letter-spacing:2px;}
-.share-season{font-size:0.75rem;color:var(--blue);letter-spacing:3px;font-weight:600;}
-.share-result-line{font-family:var(--font-display);font-size:1.6rem;letter-spacing:3px;color:var(--blue);margin-bottom:16px;}
 .share-formation{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
-.share-row{display:flex;justify-content:center;gap:8px;}
+.share-row{display:flex;justify-content:center;gap:6px;}
 .share-player-card{display:flex;flex-direction:column;align-items:center;gap:3px;width:72px;}
-.share-pos-badge{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:800;border:2px solid;}
-.share-pos-badge.GK{background:#F59E0B22;color:#F59E0B;border-color:#F59E0B;}
-.share-pos-badge.DEF{background:#0232FF22;color:#60A5FA;border-color:#60A5FA;}
-.share-pos-badge.MID{background:#10B98122;color:#10B981;border-color:#10B981;}
-.share-pos-badge.FWD{background:#EF444422;color:#EF4444;border-color:#EF4444;}
-.share-player-name{font-size:0.55rem;font-weight:700;text-align:center;color:var(--white);line-height:1.2;max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.share-player-rating{font-size:0.6rem;font-weight:700;color:var(--blue);}
+.share-club-logo{width:32px;height:32px;object-fit:contain;}
+.share-club-abbr{width:32px;height:32px;border-radius:50%;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:0.55rem;font-weight:800;color:var(--blue);}
+.share-player-name{font-size:0.52rem;font-weight:700;text-align:center;color:var(--white);line-height:1.2;max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.share-player-rating{font-size:0.58rem;font-weight:700;color:var(--blue);}
+.share-header-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.share-title{font-family:var(--font-display);font-size:1.2rem;letter-spacing:3px;color:var(--blue);}
 .share-footer{display:flex;justify-content:space-between;align-items:center;font-size:0.72rem;color:var(--silver);margin-top:12px;padding-top:12px;border-top:1px solid var(--blue-dim);}
 .share-brand{font-family:var(--font-display);font-size:1rem;letter-spacing:2px;color:var(--blue);}
-
-/* SHARE BUTTONS */
 .share-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px;}
 .share-btns-2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px;}
 .share-btn{padding:12px 8px;border-radius:10px;border:none;font-size:0.78rem;font-weight:700;cursor:pointer;font-family:var(--font-body);transition:opacity 0.15s;}
@@ -224,12 +200,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .footer-links a{color:var(--silver);text-decoration:none;font-size:0.78rem;}
 .footer-links a:hover{color:var(--blue);}
 
-/* PLACING */
-.placing-info{background:var(--mid);border:1px solid var(--blue-dim);border-radius:12px;padding:20px;margin-bottom:16px;}
-.placing-name{font-family:var(--font-display);font-size:1.8rem;letter-spacing:2px;}
-.placing-meta{font-size:0.82rem;color:var(--silver);margin-top:4px;}
-.placing-instruction{font-size:0.72rem;color:var(--blue);letter-spacing:2px;text-transform:uppercase;margin-top:12px;}
-
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 .fade-in{animation:fadeIn 0.25s ease forwards;}
 @media(max-width:900px){.game-cols{flex-direction:column;}.col-right{width:100%;}.stat-grid{grid-template-columns:repeat(2,1fr);}}
@@ -247,9 +217,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     </div>
     <button class="htp-link" onclick="openModal()">HOW TO PLAY</button>
   </div>
-
   <div id="game-root"></div>
-
   <div class="app-footer">
     <div class="footer-links">
       <a href="javascript:void(0)" onclick="openModal()">How to Play</a>
@@ -263,24 +231,30 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <div class="modal-box">
     <button class="modal-close" onclick="closeModal()">&times;</button>
     <div class="modal-title">HOW TO PLAY</div>
-    <div class="modal-section"><h3>The Goal</h3><p>Draft 11 players from a Champions League club's best season and simulate your UCL campaign. The catch: you don't get to choose your club.</p></div>
-    <div class="modal-section"><h3>Spinning</h3><p>Hit Spin to get a random club and season combo — for example Real Madrid 2017/18 or Liverpool 2018/19. You have 2 skips if you hate what you landed on.</p></div>
-    <div class="modal-section"><h3>Drafting</h3><p>Choose 11 players: 1 GK, 4 DEF, 3 MID, and 3 FWD. Players are sorted by rating. Use position filters to narrow the list. Click a player, place them on the pitch, then assign a shirt number.</p></div>
-    <div class="modal-section"><h3>The Simulation</h3><p>Your team's average rating determines your UCL fate. Elite squads win the trophy. Weaker squads exit early. Results range from Group Stage exit to Champion.</p></div>
+    <div class="modal-section"><h3>The Goal</h3><p>Spin 11 times to build a squad from 11 different Champions League clubs and simulate your UCL campaign.</p></div>
+    <div class="modal-section"><h3>Each Spin</h3><p>You get a random club and season. Pick 1 player from that pool, place them on the pitch, then the next spin happens automatically.</p></div>
+    <div class="modal-section"><h3>Positions</h3><p>GKs go in goal, DEFs in the back 4, MIDs in the middle 3, FWDs in the front 3. Strict — no cross-position drafting.</p></div>
+    <div class="modal-section"><h3>The Simulation</h3><p>Your team's average rating determines your UCL fate. Elite squads win the trophy. Results range from Group Stage exit to Champion.</p></div>
     <div class="modal-section"><h3>Tips</h3><p>A rating above 7.35 gives you a shot at the title. Watch for Man City 23/24, PSG 17/18, and Barcelona 15/16 — the strongest pools in the game.</p></div>
   </div>
 </div>
 
 <script>
-// ── STATE ─────────────────────────────────────────────────────────────────────
+// ── DATA & STATE ──────────────────────────────────────────────────────────────
 let PLAYERS = [];
 let validCombos = [];
 
 const S = {
-  phase:'loading', combo:null, pool:[], posFilter:'ALL',
-  roster:{}, pendingPlayer:null, pendingPitchPos:null,
-  skipsLeft:2, result:null, stats:null,
-  logoCache:{}, spinFrames:[], takenSlots:new Set()
+  phase: 'loading',
+  combo: null,
+  pool: [],
+  posFilter: 'ALL',
+  roster: {},        // { pitchPos: playerObj }
+  pendingPlayer: null,
+  pendingPitchPos: null,
+  pickNum: 0,        // 0-10, which pick we're on
+  result: null,
+  stats: null,
 };
 
 // ── CONSTANTS ─────────────────────────────────────────────────────────────────
@@ -309,111 +283,98 @@ const RESULT_EMOJI = {
   'Champion':'🏆','Runner Up':'🥈','Semi Final':'4️⃣',
   'Quarter Final':'8️⃣','Round of 16':'🔟','Group Stage':'❌'
 };
-
 const POS_SHORT = {Goalkeepers:'GK',Defenders:'DEF',Midfielders:'MID',Forwards:'FWD'};
 const POS_CLASS = {Goalkeepers:'GK',Defenders:'DEF',Midfielders:'MID',Forwards:'FWD'};
 
-// ── TEAM LOGOS ────────────────────────────────────────────────────────────────
-async function fetchTeamLogo(teamId) {
-  if (!teamId) return null;
-  const key = String(teamId);
-  if (S.logoCache[key] !== undefined) return S.logoCache[key];
-  S.logoCache[key] = null;
-  try {
-    const res = await fetch(`https://api.sofascore.com/api/v1/team/${teamId}/image`,
-      {headers:{'Referer':'https://www.sofascore.com/'}});
-    if (!res.ok) return null;
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-    S.logoCache[key] = url;
-    return url;
-  } catch(e) { return null; }
+// ── LOGO HELPERS ──────────────────────────────────────────────────────────────
+function logoPath(teamId) {
+  return teamId ? `logos/${teamId}.png` : null;
 }
 
 function clubAbbr(name) {
-  const words = name.split(' ').filter(w => w.length > 2 && !['FC','AC','AS','IF','BV','SC','CF'].includes(w));
-  if (words.length === 0) return name.slice(0,3).toUpperCase();
+  const words = name.split(' ').filter(w => w.length > 2 && !['FC','AC','AS','IF','BV','SC','CF','SK'].includes(w));
+  if (!words.length) return name.slice(0,3).toUpperCase();
   if (words.length === 1) return words[0].slice(0,3).toUpperCase();
   return words.slice(0,2).map(w=>w[0]).join('').toUpperCase();
 }
 
-function logoCircle(teamId, club, size=110, cls='slot-logo-circle') {
-  const src = teamId ? S.logoCache[String(teamId)] : null;
-  const inner = src
-    ? `<img class="slot-logo-img" src="${src}" alt="${club}">`
-    : `<div class="slot-logo-abbr">${clubAbbr(club)}</div>`;
-  return `<div class="${cls}" style="width:${size}px;height:${size}px;">${inner}</div>`;
+function logoCircleLg(teamId, club) {
+  const path = logoPath(teamId);
+  return `<div class="slot-logo-circle" id="slot-logo-circle" style="width:110px;height:110px;">
+    ${path ? `<img class="slot-logo-img" src="${path}" alt="${club}" onerror="this.parentElement.innerHTML='<div class=slot-logo-abbr>${clubAbbr(club)}</div>'">` : `<div class="slot-logo-abbr">${clubAbbr(club)}</div>`}
+  </div>`;
 }
 
-function draftLogoCircle(teamId, club) {
-  const src = teamId ? S.logoCache[String(teamId)] : null;
-  const inner = src
-    ? `<img class="draft-club-logo-img" src="${src}" alt="${club}">`
-    : `<div class="draft-club-logo-abbr">${clubAbbr(club)}</div>`;
-  return `<div class="draft-club-logo-circle">${inner}</div>`;
+function logoCircleSm(teamId, club) {
+  const path = logoPath(teamId);
+  return `<div class="draft-logo-circle">
+    ${path ? `<img class="draft-logo-img" src="${path}" alt="${club}" onerror="this.parentElement.innerHTML='<div class=draft-logo-abbr>${clubAbbr(club)}</div>'">` : `<div class="draft-logo-abbr">${clubAbbr(club)}</div>`}
+  </div>`;
 }
 
-function shareLogoCircle(teamId, club) {
-  const src = teamId ? S.logoCache[String(teamId)] : null;
-  const inner = src
-    ? `<img class="share-club-logo-img" src="${src}" alt="${club}">`
-    : `<div class="share-club-logo-abbr" style="font-family:var(--font-display);font-size:0.8rem;letter-spacing:1px;color:var(--blue);">${clubAbbr(club)}</div>`;
-  return `<div class="share-club-logo-circle">${inner}</div>`;
+function rosterLogo(teamId, club) {
+  const path = logoPath(teamId);
+  return path
+    ? `<img class="roster-club-logo" src="${path}" alt="${club}" onerror="this.outerHTML='<div class=roster-club-abbr>${clubAbbr(club)}</div>'">`
+    : `<div class="roster-club-abbr">${clubAbbr(club)}</div>`;
+}
+
+function shareLogoEl(teamId, club) {
+  const path = logoPath(teamId);
+  return path
+    ? `<img class="share-club-logo" src="${path}" alt="${club}" onerror="this.outerHTML='<div class=share-club-abbr>${clubAbbr(club)}</div>'">`
+    : `<div class="share-club-abbr">${clubAbbr(club)}</div>`;
 }
 
 // ── SIMULATION ────────────────────────────────────────────────────────────────
 function poisson(l){let L=Math.exp(-l),k=0,p=1;do{k++;p*=Math.random();}while(p>L);return k-1;}
-function getResult(avg){
-  const n=avg+(Math.random()-0.5)*2*NOISE;
-  for(const t of THRESHOLDS)if(n<=t.val)return t.label;
+
+function getResult(avg) {
+  const n = avg + (Math.random()-0.5)*2*NOISE;
+  for (const t of THRESHOLDS) if (n <= t.val) return t.label;
   return 'Champion';
 }
-function simulateStats(avg,result){
-  const nm={'Group Stage':6,'Round of 16':8,'Quarter Final':10,'Semi Final':12,'Runner Up':13,'Champion':13}[result];
-  const d=avg-BASELINE,atk=Math.max(0.3,BASE_G+d*SCALE),def=Math.max(0.3,BASE_G-d*SCALE);
+
+function simulateStats(avg, result) {
+  const nm = {'Group Stage':6,'Round of 16':8,'Quarter Final':10,'Semi Final':12,'Runner Up':13,'Champion':13}[result];
+  const d=avg-BASELINE, atk=Math.max(0.3,BASE_G+d*SCALE), def=Math.max(0.3,BASE_G-d*SCALE);
   let w=0,dr=0,l=0,gf=0,ga=0;
-  for(let i=0;i<nm;i++){
-    const od=BASELINE+(Math.random()-0.5)*2*0.166-BASELINE;
-    const oa=Math.max(0.3,BASE_G+od*SCALE),od2=Math.max(0.3,BASE_G-od*SCALE);
-    const tg=poisson((atk+od2)/2),og=poisson((oa+def)/2);
-    gf+=tg;ga+=og;
-    if(tg>og)w++;else if(tg===og)dr++;else l++;
+  for (let i=0;i<nm;i++) {
+    const od=(Math.random()-0.5)*2*0.166;
+    const oa=Math.max(0.3,BASE_G+od*SCALE), od2=Math.max(0.3,BASE_G-od*SCALE);
+    const tg=poisson((atk+od2)/2), og=poisson((oa+def)/2);
+    gf+=tg; ga+=og;
+    if(tg>og)w++; else if(tg===og)dr++; else l++;
   }
-  return{matches:nm,wins:w,draws:dr,losses:l,gf,ga,gd:gf-ga,pts:w*3+dr};
+  return {matches:nm,wins:w,draws:dr,losses:l,gf,ga,gd:gf-ga,pts:w*3+dr};
 }
 
 // ── HELPERS ───────────────────────────────────────────────────────────────────
-function slotCounts(){
-  const c={Goalkeepers:0,Defenders:0,Midfielders:0,Forwards:0};
-  for(const pp in S.roster)c[PITCH_POS[pp].slot]++;
-  return c;
-}
-function totalDrafted(){return Object.keys(S.roster).length;}
-function eligiblePPs(player){
+function totalDrafted() { return Object.keys(S.roster).length; }
+
+function eligiblePPs(player) {
   return Object.entries(PITCH_POS)
-    .filter(([pp,info])=>{
-      const m=player.position===info.slot||
-        (player.position==='Forwards'&&info.slot==='Midfielders')||
-        (player.position==='Midfielders'&&info.slot==='Forwards');
-      return m&&!S.roster[pp];
-    }).map(([pp])=>pp);
+    .filter(([pp,info]) => player.position === info.slot && !S.roster[pp])
+    .map(([pp]) => pp);
 }
 
+function filledSlots() { return new Set(Object.keys(S.roster)); }
+
 // ── PITCH ─────────────────────────────────────────────────────────────────────
-function buildPitch(eligPPs=[]){
-  const W=420,H=420;
+function buildPitch(eligPPs=[]) {
+  const W=420, H=420;
   let btns='';
-  for(const [pp,info] of Object.entries(PITCH_POS)){
+  for (const [pp,info] of Object.entries(PITCH_POS)) {
     const cx=info.x/100*W, cy=info.y/100*H;
     const filled=!!S.roster[pp];
     const elig=eligPPs.includes(pp)&&!filled;
     const inelig=eligPPs.length>0&&!elig&&!filled;
     let cls='pitch-btn';
-    if(filled)cls+=` filled filled-${info.posClass}`;
-    else if(elig)cls+=' eligible';
-    else if(inelig)cls+=' ineligible';
+    if(filled) cls+=` filled filled-${info.posClass}`;
+    else if(elig) cls+=' eligible';
+    else if(inelig) cls+=' ineligible';
     let inner='';
-    if(filled){
+    if(filled) {
       const p=S.roster[pp];
       const lastName=p.player.split(' ').pop();
       inner=`<span class="pb-label">${info.label}</span><span class="pb-name">${lastName}</span>`;
@@ -436,105 +397,107 @@ function buildPitch(eligPPs=[]){
 }
 
 // ── ROSTER LIST ───────────────────────────────────────────────────────────────
-function buildRosterList(){
-  const entries=Object.values(S.roster).sort((a,b)=>a.slotNum-b.slotNum);
-  if(!entries.length)return`<div style="font-size:0.8rem;color:var(--silver-dim);padding:10px;">No players drafted yet</div>`;
-  return entries.map(p=>{
+function buildRosterList() {
+  const entries = Object.values(S.roster).sort((a,b) => {
+    const order = {Goalkeepers:0,Defenders:1,Midfielders:2,Forwards:3};
+    return order[a.position]-order[b.position];
+  });
+  if (!entries.length) return `<div style="font-size:0.8rem;color:var(--silver-dim);padding:10px;">No players drafted yet</div>`;
+  return entries.map(p => {
     const isGk=p.position==='Goalkeepers';
     const pc=POS_CLASS[p.position]||'DEF';
-    const stat=isGk?`${p.saves}SV · ${p.clean_sheets}CS`:` ${p.goals}G · ${p.assists}A · ${p.rating.toFixed(2)}`;
-    return`<div class="roster-row">
-      <div class="slot-num">${p.slotNum}</div>
-      <div class="pos-badge ${pc}" style="width:28px;height:28px;font-size:0.55rem;">${POS_SHORT[p.position]}</div>
+    const stat=isGk?`${p.saves}SV · ${p.clean_sheets}CS`:`${p.goals}G · ${p.assists}A · ${p.rating.toFixed(2)}`;
+    return `<div class="roster-row">
+      <div class="pos-badge ${pc}" style="width:26px;height:26px;font-size:0.5rem;">${POS_SHORT[p.position]}</div>
+      ${rosterLogo(p.team_id, p.club)}
       <div class="roster-info">
         <div class="roster-name">${p.player}</div>
-        <div class="roster-stat">${p.pitchPos} · ${stat}</div>
+        <div class="roster-stat">${p.club} · ${p.season} · ${stat}</div>
       </div>
     </div>`;
   }).join('');
 }
 
-function buildPills(){
-  const c=slotCounts();
-  return`<div class="slot-pills">
-    <span class="pill ${c.Goalkeepers>=1?'filled':''}">GK ${c.Goalkeepers}/1</span>
-    <span class="pill ${c.Defenders>=4?'filled':''}">DEF ${c.Defenders}/4</span>
-    <span class="pill ${c.Midfielders>=3?'filled':''}">MID ${c.Midfielders}/3</span>
-    <span class="pill ${c.Forwards>=3?'filled':''}">FWD ${c.Forwards}/3</span>
-    <span class="pill ${totalDrafted()>=11?'filled':''}">TOTAL ${totalDrafted()}/11</span>
-  </div>`;
+function buildProgress() {
+  const n = totalDrafted();
+  const pips = Array.from({length:11},(_,i) => {
+    let cls='progress-pip';
+    if(i<n) cls+=' done';
+    else if(i===n) cls+=' current';
+    return `<div class="${cls}"></div>`;
+  }).join('');
+  return `<div class="progress-bar">${pips}<span class="progress-label">Pick ${n+1} of 11</span></div>`;
 }
 
 // ── SLOT ANIMATION ────────────────────────────────────────────────────────────
-function runSlotAnimation(frames){
+function runSlotAnimation(frames) {
   let i=0;
   const n=frames.length;
   const delays=frames.map((_,j)=>80+j*28+(j>n-4?(j-(n-4))*90:0));
   const wrap=document.getElementById('slot-wrap');
-  if(wrap)wrap.classList.add('spinning');
+  if(wrap) wrap.classList.add('spinning');
 
-  function showFrame(){
+  function showFrame() {
     const f=frames[i];
     const circleEl=document.getElementById('slot-logo-circle');
     const clubEl=document.getElementById('slot-club');
     const seasonEl=document.getElementById('slot-season');
-    if(circleEl){
-      const src=f.teamId?S.logoCache[String(f.teamId)]:null;
-      circleEl.innerHTML=src
-        ?`<img class="slot-logo-img" src="${src}" alt="${f.club}">`
-        :`<div class="slot-logo-abbr">${clubAbbr(f.club)}</div>`;
+    if(circleEl) {
+      const path=logoPath(f.teamId);
+      circleEl.innerHTML=path
+        ? `<img class="slot-logo-img" src="${path}" alt="${f.club}" onerror="this.parentElement.innerHTML='<div class=slot-logo-abbr>${clubAbbr(f.club)}</div>'">`
+        : `<div class="slot-logo-abbr">${clubAbbr(f.club)}</div>`;
     }
-    if(clubEl)clubEl.textContent=f.club;
-    if(seasonEl)seasonEl.textContent=f.season;
+    if(clubEl) clubEl.textContent=f.club;
+    if(seasonEl) seasonEl.textContent=f.season;
     i++;
-    if(i<n){setTimeout(showFrame,delays[i-1]);}
-    else{setTimeout(()=>{if(wrap)wrap.classList.remove('spinning');spinDone();},800);}
+    if(i<n) { setTimeout(showFrame,delays[i-1]); }
+    else { setTimeout(()=>{ if(wrap) wrap.classList.remove('spinning'); spinDone(); },800); }
   }
   showFrame();
 }
 
-function spinDone(){
+function spinDone() {
   const final=S.spinFrames[S.spinFrames.length-1];
-  S.combo={club:final.club,season:final.season};
-  S.pool=PLAYERS.filter(p=>p.club===final.club&&p.season===final.season).sort((a,b)=>b.rating-a.rating);
-  S.roster={};S.takenSlots=new Set();S.pendingPlayer=null;
+  S.combo={club:final.club,season:final.season,teamId:final.teamId};
+  S.pool=PLAYERS
+    .filter(p=>p.club===final.club&&p.season===final.season)
+    .sort((a,b)=>b.rating-a.rating);
+  S.pendingPlayer=null;
   S.phase='picking';
   render();
 }
 
 // ── RENDER ────────────────────────────────────────────────────────────────────
-function render(){
+function render() {
   const root=document.getElementById('game-root');
-  if(!root)return;
+  if(!root) return;
   root.innerHTML=buildPhase();
 }
 
-function buildPhase(){
-  switch(S.phase){
+function buildPhase() {
+  switch(S.phase) {
     case 'loading': return buildLoading();
     case 'rolling':
     case 'spinning': return buildRolling();
-    case 'picking':
-    case 'ready': return buildPicking();
+    case 'picking': return buildPicking();
     case 'placing': return buildPlacing();
-    case 'slot': return buildSlot();
     case 'results': return buildResults();
     default: return buildRolling();
   }
 }
 
-function buildLoading(){
-  return`<div style="text-align:center;padding:80px 20px;">
+function buildLoading() {
+  return `<div style="text-align:center;padding:80px 20px;">
     <div style="font-family:var(--font-display);font-size:2rem;letter-spacing:4px;color:var(--silver);">LOADING...</div>
   </div>`;
 }
 
-function buildRolling(){
+function buildRolling() {
   const n=totalDrafted();
-  const lbl=n===0?'Pick your squad':`Slot ${n+1} of 11`;
-  const teamId=S.combo?S.pool[0]?.team_id:null;
-  return`<div class="game-cols fade-in">
+  return `<div class="game-cols fade-in">
     <div class="col-left">
+      ${buildProgress()}
       <div class="slot-wrap" id="slot-wrap">
         <div class="slot-logo-circle" id="slot-logo-circle" style="width:110px;height:110px;">
           <div class="slot-logo-abbr">?</div>
@@ -542,9 +505,7 @@ function buildRolling(){
         <div class="slot-club" id="slot-club">???</div>
         <div class="slot-season" id="slot-season">??/??</div>
       </div>
-      <button class="btn-spin" id="spin-btn" onclick="doSpin()">SPIN — ${lbl}</button>
-      ${S.skipsLeft>0?`<button class="btn-skip" onclick="doSkip()">SKIP THIS ROLL</button>`:''}
-      <div class="skip-count">${S.skipsLeft} skip${S.skipsLeft!==1?'s':''} remaining</div>
+      <button class="btn-spin" id="spin-btn" onclick="doSpin()">SPIN — Pick ${n+1} of 11</button>
     </div>
     <div class="col-right">
       <div class="section-label">YOUR SQUAD</div>
@@ -554,16 +515,16 @@ function buildRolling(){
   </div>`;
 }
 
-function buildPicking(){
+function buildPicking() {
   const drafted=Object.values(S.roster).map(p=>p.player_id);
   let pool=S.pool.filter(p=>!drafted.includes(p.player_id));
-  if(S.posFilter!=='ALL')pool=pool.filter(p=>p.position===S.posFilter);
-  const teamId=S.pool[0]?.team_id;
+  if(S.posFilter!=='ALL') pool=pool.filter(p=>p.position===S.posFilter);
+  const teamId=S.combo?.teamId;
 
   const rows=pool.slice(0,50).map((p,i)=>{
     const isGk=p.position==='Goalkeepers';
     const pc=POS_CLASS[p.position]||'DEF';
-    return`<tr class="player-row" onclick="pickPlayer(${i})">
+    return `<tr class="player-row" onclick="pickPlayer(${i})">
       <td><div class="player-img-cell">
         <div class="pos-badge ${pc}">${POS_SHORT[p.position]}</div>
         <div class="player-name-cell">${p.player}</div>
@@ -578,19 +539,22 @@ function buildPicking(){
   const posFilters=['ALL','Goalkeepers','Defenders','Midfielders','Forwards']
     .map(pos=>`<button class="pos-btn ${S.posFilter===pos?'active':''}" onclick="setFilter('${pos}')">${pos==='ALL'?'ALL':POS_SHORT[pos]}</button>`).join('');
 
-  const simBtn=totalDrafted()>=11?`<button class="btn-primary" onclick="doSimulate()">SIMULATE</button>`:'';
+  const path=logoPath(teamId);
+  const logoHtml=`<div class="draft-logo-circle" style="width:56px;height:56px;">
+    ${path?`<img class="draft-logo-img" src="${path}" alt="${S.combo.club}" onerror="this.parentElement.innerHTML='<div class=draft-logo-abbr>${clubAbbr(S.combo.club)}</div>'">`:`<div class="draft-logo-abbr">${clubAbbr(S.combo.club)}</div>`}
+  </div>`;
 
-  return`<div class="game-cols fade-in">
+  return `<div class="game-cols fade-in">
     <div class="col-left">
+      ${buildProgress()}
       <div class="draft-header">
-        ${draftLogoCircle(teamId,S.combo.club)}
+        ${logoHtml}
         <div>
           <div class="draft-club-name">${S.combo.club}</div>
           <div class="draft-season">${S.combo.season}</div>
+          <div class="draft-pick-label">Pick 1 player</div>
         </div>
-        ${S.skipsLeft>0?`<button class="btn-skip-inline" onclick="doSkip()" style="margin-left:auto;">Skip (${S.skipsLeft} left)</button>`:''}
       </div>
-      ${buildPills()}
       <div class="pos-filters">${posFilters}</div>
       <input class="search-input" type="text" placeholder="Search by name..." oninput="filterSearch(this.value)">
       <div class="table-header"><div class="table-label">${pool.length} players available</div></div>
@@ -605,7 +569,6 @@ function buildPicking(){
           <tbody id="player-tbody">${rows}</tbody>
         </table>
       </div>
-      ${simBtn}
     </div>
     <div class="col-right">
       <div class="section-label">YOUR SQUAD</div>
@@ -615,14 +578,15 @@ function buildPicking(){
   </div>`;
 }
 
-function buildPlacing(){
+function buildPlacing() {
   const p=S.pendingPlayer;
   const elig=eligiblePPs(p);
-  return`<div class="game-cols fade-in">
+  return `<div class="game-cols fade-in">
     <div class="col-left">
+      ${buildProgress()}
       <div class="placing-info">
         <div class="placing-name">${p.player}</div>
-        <div class="placing-meta">${p.position} · Rating ${p.rating.toFixed(2)}</div>
+        <div class="placing-meta">${p.club} ${p.season} · ${p.position} · Rating ${p.rating.toFixed(2)}</div>
         <div class="placing-instruction">↓ Click an eligible position on the pitch</div>
       </div>
       <button class="btn-back" onclick="backToPicking()">← Back to player list</button>
@@ -631,40 +595,22 @@ function buildPlacing(){
   </div>`;
 }
 
-function buildSlot(){
-  const p=S.pendingPlayer;
-  const btns=Array.from({length:11},(_,i)=>i+1)
-    .map(s=>`<button class="lineup-slot-btn" ${S.takenSlots.has(s)?'disabled':''} onclick="assignSlot(${s})">#${s}</button>`).join('');
-  return`<div class="game-cols fade-in">
-    <div class="col-left">
-      <div class="placing-info">
-        <div class="placing-name">Assign shirt to ${p.player}</div>
-        <div class="placing-meta">Rating ${p.rating.toFixed(2)} · ${p.position}</div>
-      </div>
-      <div class="lineup-slots">${btns}</div>
-    </div>
-    <div class="col-right">
-      ${buildPitch()}
-      <div class="roster-list">${buildRosterList()}</div>
-    </div>
-  </div>`;
-}
-
-function buildResults(){
+function buildResults() {
   const s=S.stats, result=S.result, emoji=RESULT_EMOJI[result]||'⚽';
-  const ordered=Object.values(S.roster).sort((a,b)=>a.slotNum-b.slotNum);
+  const ordered=Object.values(S.roster).sort((a,b)=>{
+    const order={Goalkeepers:0,Defenders:1,Midfielders:2,Forwards:3};
+    return order[a.position]-order[b.position];
+  });
   const avgRating=(ordered.reduce((sum,p)=>sum+p.rating,0)/ordered.length).toFixed(2);
-  const teamId=S.pool[0]?.team_id;
 
-  // Formation rows
-  const fwdRow =['LW','ST','RW'].map(pp=>shareCard(S.roster[pp])).join('');
-  const midRow =['LM','CM','RM'].map(pp=>shareCard(S.roster[pp])).join('');
-  const defRow =['LB','CB2','CB1','RB'].map(pp=>shareCard(S.roster[pp])).join('');
-  const gkRow  =['GK'].map(pp=>shareCard(S.roster[pp])).join('');
+  const fwdRow=['LW','ST','RW'].map(pp=>shareCard(S.roster[pp])).join('');
+  const midRow=['LM','CM','RM'].map(pp=>shareCard(S.roster[pp])).join('');
+  const defRow=['LB','CB2','CB1','RB'].map(pp=>shareCard(S.roster[pp])).join('');
+  const gkRow=['GK'].map(pp=>shareCard(S.roster[pp])).join('');
 
   const tableRows=ordered.map(p=>{
     const isGk=p.position==='Goalkeepers';
-    return`<tr><td>#${p.slotNum} ${p.player}</td>
+    return `<tr><td>${p.player} <span style="color:var(--silver);font-size:0.7rem;">${p.club}</span></td>
       <td class="td-rating">${p.rating.toFixed(2)}</td>
       <td>${isGk?p.saves:p.goals}</td>
       <td>${isGk?p.clean_sheets:p.assists}</td>
@@ -672,13 +618,13 @@ function buildResults(){
   }).join('');
 
   const url=window.location.href;
-  const txt=`I drafted ${S.combo.club} ${S.combo.season} and reached the ${result} in European Nights!`;
+  const txt=`I built an 11-club squad and reached the ${result} in European Nights! Can you do better?`;
 
-  return`<div class="fade-in">
+  return `<div class="fade-in">
     <div class="result-banner">
       <div class="result-emoji">${emoji}</div>
       <div><span class="result-record">${s.wins}W ${s.draws}D ${s.losses}L</span><span class="result-label">${result}</span></div>
-      <div class="result-meta">${S.combo.club} · ${S.combo.season} · Avg RTG ${avgRating}</div>
+      <div class="result-meta">11 clubs · Avg RTG ${avgRating}</div>
       <div class="stat-grid">
         <div class="stat-block"><div class="stat-block-val">${s.gf}</div><div class="stat-block-label">Goals For</div></div>
         <div class="stat-block"><div class="stat-block-val">${s.ga}</div><div class="stat-block-label">Goals Against</div></div>
@@ -689,11 +635,10 @@ function buildResults(){
     <div class="game-cols">
       <div class="col-left">
         <div class="share-card">
-          <div class="share-header">
-            ${shareLogoCircle(teamId,S.combo.club)}
-            <div><div class="share-club-name">${S.combo.club}</div><div class="share-season">${S.combo.season}</div></div>
+          <div class="share-header-row">
+            <div class="share-title">${emoji} ${result}</div>
+            <div style="font-size:0.72rem;color:var(--silver);">Avg RTG ${avgRating}</div>
           </div>
-          <div class="share-result-line">${emoji} ${result}</div>
           <div class="share-formation">
             <div class="share-row">${fwdRow}</div>
             <div class="share-row">${midRow}</div>
@@ -734,111 +679,88 @@ function buildResults(){
   </div>`;
 }
 
-function shareCard(p){
-  if(!p)return`<div class="share-player-card"><div class="share-pos-badge" style="width:44px;height:44px;border-radius:50%;background:var(--blue-dim);border:2px solid var(--blue-dim);">?</div><div class="share-player-name">—</div></div>`;
-  const pc=POS_CLASS[p.position]||'DEF';
-  const lastName=p.player.split(' ').pop();
-  return`<div class="share-player-card">
-    <div class="share-pos-badge ${pc}">${POS_SHORT[p.position]}</div>
-    <div class="share-player-name">${lastName}</div>
+function shareCard(p) {
+  if(!p) return `<div class="share-player-card"><div class="share-club-abbr">?</div><div class="share-player-name">—</div></div>`;
+  return `<div class="share-player-card">
+    ${shareLogoEl(p.team_id, p.club)}
+    <div class="share-player-name">${p.player.split(' ').pop()}</div>
     <div class="share-player-rating">${p.rating.toFixed(2)}</div>
   </div>`;
 }
 
 // ── ACTIONS ───────────────────────────────────────────────────────────────────
-let _filteredPool=[];
-
-function doSpin(){
+function doSpin() {
   const btn=document.getElementById('spin-btn');
-  if(btn)btn.disabled=true;
-  const n=10;
+  if(btn) btn.disabled=true;
+
   const frames=[];
-  for(let i=0;i<n;i++){
+  for(let i=0;i<10;i++) {
     const c=validCombos[Math.floor(Math.random()*validCombos.length)];
     const p=PLAYERS.find(pl=>pl.club===c.club&&pl.season===c.season);
-    frames.push({club:c.club,season:c.season,teamId:p?.team_id});
+    frames.push({club:c.club,season:c.season,teamId:p?.team_id||null});
   }
   const fc=validCombos[Math.floor(Math.random()*validCombos.length)];
   const fp=PLAYERS.find(pl=>pl.club===fc.club&&pl.season===fc.season);
-  frames.push({club:fc.club,season:fc.season,teamId:fp?.team_id});
+  frames.push({club:fc.club,season:fc.season,teamId:fp?.team_id||null});
+
   S.spinFrames=frames;
   S.phase='spinning';
   render();
-
-  // Prefetch logos then animate
-  const teamIds=[...new Set(frames.map(f=>f.teamId).filter(Boolean))];
-  Promise.all(teamIds.map(id=>fetchTeamLogo(id))).then(()=>{
-    runSlotAnimation(frames);
-  });
+  setTimeout(()=>runSlotAnimation(frames), 100);
 }
 
-function doSkip(){
-  if(S.skipsLeft<=0)return;
-  S.skipsLeft--;
-  S.phase='rolling';
-  render();
-}
+function setFilter(pos) { S.posFilter=pos; render(); }
 
-function setFilter(pos){S.posFilter=pos;render();}
-
-function filterSearch(term){
-  const rows=document.querySelectorAll('#player-tbody .player-row');
-  rows.forEach(row=>{
+function filterSearch(term) {
+  document.querySelectorAll('#player-tbody .player-row').forEach(row=>{
     const name=row.querySelector('.player-name-cell')?.textContent.toLowerCase()||'';
     row.style.display=name.includes(term.toLowerCase())?'':'none';
   });
 }
 
-function pickPlayer(idx){
+function pickPlayer(idx) {
   const drafted=Object.values(S.roster).map(p=>p.player_id);
   let pool=S.pool.filter(p=>!drafted.includes(p.player_id));
-  if(S.posFilter!=='ALL')pool=pool.filter(p=>p.position===S.posFilter);
-  _filteredPool=pool;
+  if(S.posFilter!=='ALL') pool=pool.filter(p=>p.position===S.posFilter);
   const p=pool[idx];
-  if(!p)return;
-  S.pendingPlayer=p;
+  if(!p) return;
+  // Attach team_id from combo
+  S.pendingPlayer={...p, team_id: S.combo.teamId};
   S.phase='placing';
   render();
 }
 
-function placePitch(pp){
-  S.pendingPitchPos=pp;
-  S.phase='slot';
+function placePitch(pp) {
+  const p=S.pendingPlayer;
+  S.roster[pp]={...p, pitchPos:pp};
+  S.pendingPlayer=null;
+  S.posFilter='ALL';
+
+  if(totalDrafted()>=11) {
+    // Auto-simulate
+    const avg=Object.values(S.roster).reduce((s,p)=>s+p.rating,0)/11;
+    S.result=getResult(avg);
+    S.stats=simulateStats(avg,S.result);
+    S.phase='results';
+    render();
+  } else {
+    // Auto-spin next
+    S.phase='rolling';
+    render();
+    setTimeout(()=>doSpin(), 600);
+  }
+}
+
+function backToPicking() { S.pendingPlayer=null; S.phase='picking'; render(); }
+
+function playAgain() {
+  S.phase='rolling'; S.combo=null; S.pool=[]; S.posFilter='ALL';
+  S.roster={}; S.pendingPlayer=null; S.pendingPitchPos=null;
+  S.pickNum=0; S.result=null; S.stats=null;
   render();
 }
 
-function assignSlot(num){
-  const p=S.pendingPlayer,pp=S.pendingPitchPos;
-  S.roster[pp]={...p,pitchPos:pp,slotNum:num};
-  S.takenSlots.add(num);
-  S.pendingPlayer=null;S.pendingPitchPos=null;
-  S.phase=totalDrafted()>=11?'ready':'picking';
-  render();
-}
-
-function backToPicking(){S.pendingPlayer=null;S.phase='picking';render();}
-
-function doSimulate(){
-  if(totalDrafted()<11)return;
-  const avg=Object.values(S.roster).reduce((s,p)=>s+p.rating,0)/11;
-  S.result=getResult(avg);
-  S.stats=simulateStats(avg,S.result);
-  S.phase='results';
-
-  // Prefetch team logo for results page
-  const teamId=S.pool[0]?.team_id;
-  if(teamId)fetchTeamLogo(teamId).then(()=>render());
-  else render();
-}
-
-function playAgain(){
-  S.phase='rolling';S.combo=null;S.pool=[];S.posFilter='ALL';
-  S.roster={};S.pendingPlayer=null;S.pendingPitchPos=null;
-  S.skipsLeft=2;S.result=null;S.stats=null;S.takenSlots=new Set();
-  render();
-}
-
-function si(platform,text,url){
+function si(platform,text,url) {
   const e=encodeURIComponent;
   const urls={
     twitter:`https://twitter.com/intent/tweet?text=${e(text)}&url=${e(url)}`,
@@ -848,36 +770,35 @@ function si(platform,text,url){
     telegram:`https://t.me/share/url?url=${e(url)}&text=${e(text)}`,
     reddit:`https://reddit.com/submit?url=${e(url)}&title=${e(text)}`,
   };
-  if(urls[platform])window.open(urls[platform],'_blank');
+  if(urls[platform]) window.open(urls[platform],'_blank');
 }
 
-function openModal(){document.getElementById('htp-modal').classList.add('open');}
-function closeModal(){document.getElementById('htp-modal').classList.remove('open');}
+function openModal() { document.getElementById('htp-modal').classList.add('open'); }
+function closeModal() { document.getElementById('htp-modal').classList.remove('open'); }
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
-async function init(){
+async function init() {
   render();
-  try{
-const res = await fetch('https://raw.githubusercontent.com/nlbair/european-nights/main/players.json');
-const text = await res.text();
-const cleanText = text.replace(/: NaN/g, ': null');
-PLAYERS = JSON.parse(cleanText);
+  try {
+    const res=await fetch('https://raw.githubusercontent.com/nlbair/european-nights/main/players.json');
+    const text=await res.text();
+    const clean=text.replace(/: NaN/g,': null');
+    PLAYERS=JSON.parse(clean);
+
     const seen=new Set();
     validCombos=[];
-    for(const p of PLAYERS){
+    for(const p of PLAYERS) {
       const k=`${p.club}||${p.season}`;
       if(!seen.has(k)){seen.add(k);validCombos.push({club:p.club,season:p.season});}
     }
-    // Prefetch a sample of team logos in background
-    const teamIds=[...new Set(PLAYERS.map(p=>p.team_id).filter(Boolean))];
-    teamIds.slice(0,30).forEach(id=>fetchTeamLogo(id));
+
     S.phase='rolling';
     render();
-  }catch(e){
+  } catch(e) {
     document.getElementById('game-root').innerHTML=`
       <div style="text-align:center;padding:60px;color:var(--silver);">
         <div style="font-size:1.5rem;margin-bottom:8px;">Failed to load player data</div>
-        <div style="font-size:0.85rem;">Make sure players.json is in the same folder as index.html</div>
+        <div style="font-size:0.85rem;color:var(--silver-dim);">${e.message}</div>
       </div>`;
   }
 }
