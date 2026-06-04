@@ -858,8 +858,8 @@ function closeModal(){document.getElementById('htp-modal').classList.remove('ope
 async function init(){
   render();
   try{
-    const res = await fetch('players.json').catch(() => fetch('europeannights/players.json'));
-    PLAYERS=await res.json();
+const res = await fetch('https://raw.githubusercontent.com/nlbair/european-nights/main/players.json');    
+PLAYERS=await res.json();
     const seen=new Set();
     validCombos=[];
     for(const p of PLAYERS){
